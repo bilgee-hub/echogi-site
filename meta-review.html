@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Heviin Tsai - Meta Review</title>
+</head>
+
+<body>
+  <h1>Heviin Tsai – Meta Review</h1>
+
+  <p>
+    This page is used to test the Facebook Login for Business
+    integration for the “Хэв-ийн цай” Messenger bot.
+  </p>
+
+  <button id="facebook-login-button" type="button" disabled>
+    Connect Facebook Page
+  </button>
+
+  <p id="status">Loading Facebook SDK...</p>
+
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '1579304137250880',
+        cookie: true,
+        xfbml: false,
+        version: 'v26.0'
+      });
+
+      document.getElementById('facebook-login-button').disabled = false;
+      document.getElementById('status').textContent =
+        'Facebook SDK loaded. Ready to connect.';
+    };
+
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+
+      if (d.getElementById(id)) {
+        return;
+      }
+
+      js = d.createElement(s);
+      js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
+
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    document
+      .getElementById('facebook-login-button')
+      .addEventListener('click', function() {
+
+        document.getElementById('status').textContent =
+          'Opening Facebook authorization...';
+
+        FB.login(
+          function(response) {
+            console.log('Facebook Login for Business response:', response);
+
+            if (response && response.authResponse) {
+              document.getElementById('status').textContent =
+                'Authorization completed successfully.';
+            } else {
+              document.getElementById('status').textContent =
+                'Authorization was cancelled or not completed.';
+            }
+          },
+          {
+            config_id: '1094073490021617',
+            response_type: 'code',
+            override_default_response_type: true
+          }
+        );
+      });
+  </script>
+</body>
+</html>
